@@ -1,0 +1,33 @@
+[general]
+host = "0.0.0.0"
+port = 6432
+healthcheck_timeout = 5000
+admin_username = "admin"
+admin_password = "recoil"
+
+[pools.recoil]
+primary_reads_enabled = true
+query_parser_enabled = true
+query_parser_read_write_splitting = true
+
+[pools.recoil.users.0]
+username = "postgres"
+password = "recoil"
+
+min_pool_size = 1
+pool_size = 100
+
+[pools.recoil.shards.0]
+database = "recoil"
+servers = [
+    [
+        "postgres-primary",
+        5432,
+        "primary",
+    ],
+    [
+        "postgres-replica",
+        5432,
+        "replica",
+    ],
+]
